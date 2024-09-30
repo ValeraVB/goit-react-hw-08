@@ -1,17 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login, logout, signup, refreshUser } from "./operations";
 
+const initialState = {
+  user: {
+    name: null,
+    email: null,
+  },
+  token: null,
+  isLoggedIn: false,
+  isLoading: false,
+  isRefreshing: false,
+  isError: false,
+};
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    user: null,
-    token: null,
-    isLoggedIn: false,
-    isRefreshing: false,
-  },
-  reducers: {
-    // Ваши редьюсеры, если есть
-  },
+  initialState,
   extraReducers: (builder) => {
     builder
       .addCase(signup.fulfilled, (state, { payload }) => {
@@ -35,7 +39,6 @@ const authSlice = createSlice({
   },
 });
 
-// ЭКСПОРТ
 export const { actions } = authSlice;
 export const authReducer = authSlice.reducer;
 

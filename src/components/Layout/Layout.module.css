@@ -5,18 +5,18 @@
 
 .nav {
   display: flex;
-  justify-content: space-between; /* Размещает левую и правую секции по краям */
-  align-items: center; /* Центрует элементы по вертикали */
+  justify-content: space-between;
+  align-items: center;
 }
 
 .leftSection {
-  display: flex; /* Для размещения элементов по горизонтали */
-  gap: 15px; /* Отступ между ссылками */
+  display: flex;
+  gap: 15px;
 }
 
 .rightSection {
-  display: flex; /* Для размещения элементов по горизонтали */
-  gap: 15px; /* Отступ между ссылками */
+  display: flex;
+  gap: 15px;
 }
 
 .nav a {

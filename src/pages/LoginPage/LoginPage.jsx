@@ -1,4 +1,4 @@
-import LoginForm from "../../components/LoginForm/LoginForm"; // Импортируем компонент формы входа
+import LoginForm from "../../components/LoginForm/LoginForm";
 import styles from "./LoginPage.module.css";
 
 const LoginPage = () => {

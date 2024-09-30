@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../../redux/auth/selectors"; // Импортируйте селектор для проверки аутентификации
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import styles from "./Layout.module.css";
 
 const Layout = () => {

@@ -1,0 +1,30 @@
+.header {
+  background-color: #282c34;
+  padding: 20px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between; /* Размещает левую и правую секции по краям */
+  align-items: center; /* Центрует элементы по вертикали */
+}
+
+.leftSection {
+  display: flex; /* Для размещения элементов по горизонтали */
+  gap: 15px; /* Отступ между ссылками */
+}
+
+.rightSection {
+  display: flex; /* Для размещения элементов по горизонтали */
+  gap: 15px; /* Отступ между ссылками */
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}

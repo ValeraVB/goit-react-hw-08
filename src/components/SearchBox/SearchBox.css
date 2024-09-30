@@ -1,0 +1,33 @@
+.search-box-container {
+  width: 100%;
+  max-width: 570px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.search-box-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #333;
+  transition: color 0.3s;
+}
+
+.search-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-box:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
+}

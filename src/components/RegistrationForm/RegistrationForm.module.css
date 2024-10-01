@@ -1,53 +1,9 @@
 .form {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Изменено с 'center' на 'flex-start' для выравнивания по левому краю */
-  max-width: 480px;
-  /* margin: 0 auto; */
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 320px;
 }
 
 .label {
   display: flex;
   flex-direction: column;
   margin-bottom: 16px;
-  text-align: left; /* Убедимся, что текст внутри label также выровнен по левому краю */
-}
-
-input {
-  padding: 8px;
-  width: 380px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 380px;
-}
-
-.error {
-  color: red;
-  font-size: 12px;
-  margin-top: 5px;
-  text-align: left; /* Выравнивание сообщения об ошибке по левому краю */
-}
-
-button {
-  padding: 10px 20px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
-  margin-top: 20px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-h1 {
-  text-align: left; /* Заголовок тоже будет по левому краю */
 }

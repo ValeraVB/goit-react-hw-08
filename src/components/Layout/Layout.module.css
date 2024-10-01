@@ -1,30 +1,5 @@
-.header {
-  background-color: #282c34;
-  padding: 20px;
-}
-
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.leftSection {
-  display: flex;
-  gap: 15px;
-}
-
-.rightSection {
-  display: flex;
-  gap: 15px;
-}
-
-.nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.nav a:hover {
-  text-decoration: underline;
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
 }

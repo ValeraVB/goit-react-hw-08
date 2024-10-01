@@ -1,56 +1,7 @@
-.appBar {
+header {
   display: flex;
-  justify-content: space-between; /* Размещает элементы по краям */
-  padding: 10px 20px;
-  background-color: #282c34;
-  color: white;
-}
-
-.nav {
-  display: flex;
-  width: 100%; /* Занимает всю ширину родителя */
-  justify-content: space-between; /* Размещает левую и правую секции */
-}
-
-.leftSection {
-  display: flex; /* Для размещения элементов по горизонтали */
-}
-
-.rightSection {
-  display: flex; /* Для размещения элементов по горизонтали */
-  align-items: center; /* Выравнивание по вертикали */
-}
-
-.navLink {
-  margin-right: 15px;
-  text-decoration: none;
-  color: white;
-}
-
-.navLink.active {
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-.userMenu {
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-}
-
-button {
-  background-color: transparent;
-  border: 1px solid white;
-  color: white;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: white;
-  color: black;
-}
-
-.authNav .navLink {
-  margin-left: 15px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #2a363b;
 }

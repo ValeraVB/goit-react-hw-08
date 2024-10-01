@@ -1,2 +1,2 @@
-// Селектор для доступу до фільтра за іменем
-export const selectNameFilter = (state) => state.filters.name;
+// Селектор для доступа до фільтра за іменем
+export const selectNameFilter = (state) => state.filters.filter; // Убедитесь, что свойство filter существует

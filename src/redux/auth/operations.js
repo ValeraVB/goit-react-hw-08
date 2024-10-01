@@ -1,70 +1,101 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-axios.defaults.baseURL = "https://connections-api.goit.global";
+// Устанавливаем базовый URL
+axios.defaults.baseURL = "https://connections-api.goit.global/";
 
-// Реєстрація користувача
-export const signup = createAsyncThunk(
-  "auth/signup",
-  async (userData, thunkAPI) => {
+// Устанавливаем заголовок авторизации
+const setAuthHeader = (token) => {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+// Очищаем заголовок авторизации
+const clearAuthHeader = () => {
+  axios.defaults.headers.common.Authorization = "";
+};
+
+/*
+ * POST @ /users/signup
+ * body: { name, email, password }
+ *
+ * После успешной регистрации добавляем токен в заголовок
+ */
+export const register = createAsyncThunk(
+  "auth/register",
+  async (credentials, thunkApi) => {
     try {
-      const response = await axios.post("/users/signup", userData);
-      return response.data; // Возвращаем данные пользователя
+      const { data } = await axios.post("/users/signup", credentials);
+      setAuthHeader(data.token);
+      return data;
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message;
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
 
-// Авторизація користувача
-export const login = createAsyncThunk(
+/*
+ * POST @ /users/login
+ * body: { email, password }
+ *
+ * После успешного входа добавляем токен в заголовок
+ */
+export const logIn = createAsyncThunk(
   "auth/login",
-  async (userData, thunkAPI) => {
+  async (userInfo, thunkAPI) => {
     try {
-      const response = await axios.post("/users/login", userData);
+      const response = await axios.post("/users/login", userInfo);
+      setAuthHeader(response.data.token);
       return response.data;
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message;
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-// Логаут користувача
-export const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+/*
+ * POST @ /users/logout
+ * Заголовок: Authorization: Bearer token
+ *
+ * После успешного выхода очищаем токен из заголовка
+ */
+export const logOut = createAsyncThunk("auth/logout", async (_, thunkApi) => {
   try {
     await axios.post("/users/logout");
+    clearAuthHeader();
   } catch (error) {
-    const errorMessage = error.response?.data?.message || error.message;
-    return thunkAPI.rejectWithValue(errorMessage);
+    return thunkApi.rejectWithValue(error.message);
   }
 });
 
-// Оновлення поточного користувача за токеном
+/*
+ * GET @ /users/current
+ * Заголовок: Authorization: Bearer token
+ */
 export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const persistedToken = state.auth.token;
-
-    if (!persistedToken) {
-      return thunkAPI.rejectWithValue("Unable to fetch user");
-    }
-
+    const reduxState = thunkAPI.getState();
+    setAuthHeader(reduxState.auth.token);
     try {
-      // Встановлюємо заголовок авторизації
-      axios.defaults.headers.common.Authorization = `Bearer ${persistedToken}`;
-      const { data } = await axios.get("/users/current");
-      return data; // Возвращаем данные текущего пользователя
+      const response = await axios.get("/users/current");
+      return response.data;
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message;
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(error.message);
     }
+  },
+  {
+    condition: (_, thunkAPI) => {
+      const reduxState = thunkAPI.getState();
+      return reduxState.auth.token !== null;
+    },
   }
 );
 
-// Отримання всіх контактів
+/*
+ * GET @ /contacts
+ * Заголовок: Authorization: Bearer token
+ * Получение всех контактов
+ */
 export const fetchContacts = createAsyncThunk(
   "contacts/fetchAll",
   async (_, thunkAPI) => {
@@ -72,50 +103,63 @@ export const fetchContacts = createAsyncThunk(
       const response = await axios.get("/contacts");
       return response.data;
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message;
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-// Додавання нового контакту
+/*
+ * POST @ /contacts
+ * Заголовок: Authorization: Bearer token
+ * body: { name, number }
+ * Создание нового контакта
+ */
 export const addContact = createAsyncThunk(
-  "contacts/add",
-  async (contactData, thunkAPI) => {
+  "contacts/addContact",
+  async (newContact, thunkAPI) => {
     try {
-      const response = await axios.post("/contacts", contactData);
+      const response = await axios.post("/contacts", newContact);
       return response.data;
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message;
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-// Видалення контакту
+/*
+ * DELETE @ /contacts/{contactId}
+ * Заголовок: Authorization: Bearer token
+ * Удаление контакта по ID
+ */
 export const deleteContact = createAsyncThunk(
-  "contacts/delete",
+  "contacts/deleteContact",
   async (contactId, thunkAPI) => {
     try {
       await axios.delete(`/contacts/${contactId}`);
-      return contactId; // Возвращаем ID удаленного контакта
+      return contactId; // Возвращаем ID контакта, чтобы удалить его из состояния
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message;
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-// Оновлення контакту
+/*
+ * PATCH @ /contacts/{contactId}
+ * Заголовок: Authorization: Bearer token
+ * body: { name, number }
+ * Обновление контакта по ID
+ */
 export const updateContact = createAsyncThunk(
-  "contacts/update",
-  async ({ contactId, updatedData }, thunkAPI) => {
+  "contacts/updateContact",
+  async ({ contactId, updatedContact }, thunkAPI) => {
     try {
-      const response = await axios.patch(`/contacts/${contactId}`, updatedData);
+      const response = await axios.patch(
+        `/contacts/${contactId}`,
+        updatedContact
+      );
       return response.data;
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message;
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );

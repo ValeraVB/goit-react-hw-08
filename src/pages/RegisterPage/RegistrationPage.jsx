@@ -1,13 +1,11 @@
+import PageTitle from "../../components/PageTitle/PageTitle";
 import RegistrationForm from "../../components/RegistrationForm/RegistrationForm";
-import styles from "./RegistrationPage.module.css";
 
-const RegistrationPage = () => {
+export default function RegisterPage() {
   return (
-    <div className={styles.registrationPage}>
-      <h1>Register your account</h1>
+    <div>
+      <PageTitle>Register your account</PageTitle>
       <RegistrationForm />
     </div>
   );
-};
-
-export default RegistrationPage;
+}

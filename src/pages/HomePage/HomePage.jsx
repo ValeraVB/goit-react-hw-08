@@ -1,12 +1,11 @@
+import PageTitle from "../../components/PageTitle/PageTitle";
 import styles from "./HomePage.module.css";
 
-const HomePage = () => {
+export default function HomePage() {
   return (
     <div className={styles.homePage}>
-      <h1>Welcome to Home Page</h1>
+      <PageTitle>Welcome to Home Page</PageTitle>
       <p>This is the main page of your application.</p>
     </div>
   );
-};
-
-export default HomePage;
+}

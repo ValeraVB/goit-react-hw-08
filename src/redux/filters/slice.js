@@ -18,6 +18,8 @@ const filtersSlice = createSlice({
 
 // Экспорт редюсера для добавления в store
 export const { changeFilter } = filtersSlice.actions;
-export const selectNameFilter = (state) => state.filters.filter;
 
-export default filtersSlice.reducer; // Здесь мы экспортируем редюсер по умолчанию
+// Экспорт селектора
+export const selectNameFilter = (state) => state.filters.filter; // Убедитесь, что здесь всё корректно
+
+export default filtersSlice.reducer; // Экспорт редюсера по умолчанию

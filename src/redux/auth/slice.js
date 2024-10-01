@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { login, logout, signup, refreshUser } from "./operations";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { logIn, logOut, refreshUser, register } from "./operations";
 
 const initialState = {
   user: {
@@ -18,28 +18,40 @@ const authSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder
-      .addCase(signup.fulfilled, (state, { payload }) => {
-        state.user = payload.user;
-        state.token = payload.token;
+      .addCase(register.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
         state.isLoggedIn = true;
       })
-      .addCase(login.fulfilled, (state, { payload }) => {
-        state.user = payload.user;
-        state.token = payload.token;
+
+      .addCase(logIn.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
         state.isLoggedIn = true;
       })
-      .addCase(logout.fulfilled, (state) => {
-        state.user = null;
-        state.token = null;
-        state.isLoggedIn = false;
+      .addCase(logOut.fulfilled, () => {
+        return initialState;
       })
-      .addCase(refreshUser.fulfilled, (state, { payload }) => {
-        state.user = payload;
-      });
+      .addCase(refreshUser.pending, (state) => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isRefreshing = false;
+        state.isLoggedIn = true;
+      })
+      // .addCase(refreshUser.rejected, () => {})
+      .addMatcher(isAnyOf(register.pending, logIn.pending), (state) => {
+        state.isLoading = true;
+      })
+      .addMatcher(
+        isAnyOf(register.rejected, logIn.rejected),
+        (state, action) => {
+          state.isLoading = false;
+          state.isError = action.payload;
+        }
+      );
   },
 });
 
-export const { actions } = authSlice;
-export const authReducer = authSlice.reducer;
-
-export default authReducer;
+export default authSlice.reducer;

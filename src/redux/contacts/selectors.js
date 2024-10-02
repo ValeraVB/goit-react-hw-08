@@ -20,8 +20,15 @@ export const selectFilteredContacts = createSelector(
       return contacts;
     }
     const normalizedFilter = filter.toLowerCase();
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
+
+    return contacts.filter((contact) => {
+      const hasName =
+        contact.name && contact.name.toLowerCase().includes(normalizedFilter);
+      const hasNumber =
+        contact.number &&
+        contact.number.toString().toLowerCase().includes(normalizedFilter); // Используем поле 'number' вместо 'phone'
+
+      return hasName || hasNumber;
+    });
   }
 );

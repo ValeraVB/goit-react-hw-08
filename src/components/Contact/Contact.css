@@ -34,45 +34,107 @@
   font-size: 16px;
 }
 
-.delete-button {
-  background-color: #ccc;
-  color: black;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  display: flex;
-  align-items: center;
+.delete-button,
+.edit-button {
+  background-color: #ccc; /* Цвет фона для обеих кнопок */
+  color: black; /* Цвет текста */
+  border: none; /* Убираем границу */
+  border-radius: 4px; /* Радиус границ */
+  padding: 5px 10px; /* Отступы */
+  cursor: pointer; /* Курсор в виде указателя */
+  transition: background-color 0.3s; /* Эффект перехода */
+  display: flex; /* Выравнивание элементов в кнопке */
+  align-items: center; /* Центрируем иконки по вертикали */
+  width: 100px; /* Фиксированная ширина для кнопок */
+  margin-bottom: 5px; /* Отступ снизу */
 }
 
 .delete-button:hover,
-.delete-button:focus {
-  background-color: #007bff;
-  color: white;
+.delete-button:focus,
+.edit-button:hover,
+.edit-button:focus {
+  background-color: #007bff; /* Цвет становится синим при наведении или фокусе */
+  color: white; /* Цвет текста меняется на белый при наведении или фокусе */
 }
 
-.delete-button .delete-icon {
-  margin-right: 5px;
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.delete-button .delete-icon,
+.edit-button .edit-icon {
+  margin-right: 5px; /* Пробел между иконкой и текстом */
 }
 
 .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 400px;
-  width: 100%;
-  text-align: center;
+  background-color: #f9f9f9; /* Цвет фона модального окна */
+  padding: 20px; /* Отступы внутри модального окна */
+  border-radius: 8px; /* Радиус границ */
+  max-width: 400px; /* Максимальная ширина */
+  width: 100%; /* Ширина 100% */
+  text-align: center; /* Центрируем текст */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для модального окна */
+}
+
+.modal-overlay {
+  position: fixed; /* Фиксированное позиционирование */
+  top: 0; /* Отступ от верха */
+  left: 0; /* Отступ от левого края */
+  right: 0; /* Отступ от правого края */
+  bottom: 0; /* Отступ от низа */
+  background-color: rgba(0, 0, 0, 0.75); /* Полупрозрачный фон */
+  display: flex; /* Flexbox для выравнивания */
+  align-items: center; /* Центрируем по вертикали */
+  justify-content: center; /* Центрируем по горизонтали */
+}
+
+/* Стили для кнопок в модальных окнах */
+.modal-content button {
+  background-color: #007bff; /* Цвет фона для кнопок */
+  color: white; /* Цвет текста */
+  border: none; /* Убираем границу */
+  border-radius: 4px; /* Радиус границ */
+  padding: 10px 20px; /* Отступы */
+  margin: 10px 5px; /* Отступы между кнопками */
+  cursor: pointer; /* Курсор в виде указателя */
+  transition: background-color 0.3s; /* Эффект перехода */
+  width: 150px; /* Фиксированная ширина для кнопок */
+  height: 40px; /* Фиксированная высота для кнопок */
+}
+
+.modal-content button:hover {
+  background-color: #0056b3; /* Цвет фона при наведении */
+}
+
+/* Стили для форм в модальном окне редактирования */
+.modal-content form {
+  display: flex; /* Flexbox для выравнивания формы */
+  flex-direction: column; /* Вертикальное выравнивание */
+  align-items: flex-start; /* Выравнивание по левому краю */
+  gap: 10px; /* Отступы между элементами формы */
+}
+
+.modal-content input {
+  padding: 8px; /* Отступы внутри полей ввода */
+  border: 1px solid #ddd; /* Граница для полей ввода */
+  border-radius: 4px; /* Радиус границ */
+  width: 100%; /* Ширина 100% */
+  box-sizing: border-box; /* Учитываем отступы и границы в ширину */
+}
+
+.modal-content input:focus {
+  border-color: #007bff; /* Цвет границы при фокусе */
+  outline: none; /* Убираем стандартное выделение */
+}
+
+/* Стили для контейнера кнопок в модальном окне редактирования */
+.button-container {
+  display: flex; /* Flexbox для выравнивания кнопок */
+  justify-content: center; /* Центрируем кнопки по горизонтали */
+  gap: 10px; /* Отступ между кнопками */
+  margin-top: 20px; /* Отступ сверху для кнопок */
+}
+.label {
+  display: flex; /* Flexbox для выравнивания меток */
+  justify-content: flex-start; /* Выравнивание метки и поля ввода */
+  flex-direction: column; /* Ставим метку над полем ввода */
+  width: 100%; /* Ширина 100% */
+  /* margin-bottom: 5px; Отступ между меткой и полем ввода */
+  text-align: left;
 }

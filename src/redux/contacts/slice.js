@@ -1,6 +1,11 @@
 // slice.js или reducer.js
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchContacts, addContact, deleteContact } from "./operations";
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+  updateContact,
+} from "./operations";
 
 const contactsSlice = createSlice({
   name: "contacts",
@@ -17,7 +22,6 @@ const contactsSlice = createSlice({
         state.error = null; // Обнуляем ошибку при новом запросе
       })
       .addCase(fetchContacts.fulfilled, (state, action) => {
-        console.log("Fetched contacts:", action.payload); // Логируйте полученные контакты
         state.isLoading = false;
         state.items = action.payload;
       })
@@ -32,6 +36,14 @@ const contactsSlice = createSlice({
         state.items = state.items.filter(
           (contact) => contact.id !== action.payload
         );
+      })
+      .addCase(updateContact.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+          (contact) => contact.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
       });
   },
 });

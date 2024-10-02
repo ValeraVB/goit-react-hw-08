@@ -51,7 +51,27 @@ export const deleteContact = createAsyncThunk(
       ); // Уведомление с именем контакта
       return contactId;
     } catch (error) {
-      toast.error(`Failed to delete contact`); // Уведомление об ошибке
+      // Обработка случая, когда `contactToDelete` не был найден
+      const contactName =
+        getState().contacts.items.find((contact) => contact.id === contactId)
+          ?.name || ""; // Если не найдено, присвоим пустую строку
+
+      toast.error(`Failed to delete contact "${contactName}"`); // Уведомление об ошибке
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Операция обновления контакта
+export const updateContact = createAsyncThunk(
+  "contacts/updateContact",
+  async ({ id, updatedData }, { rejectWithValue }) => {
+    try {
+      const response = await axios.patch(`/contacts/${id}`, updatedData);
+      toast.success(`Contact "${updatedData.name}" updated successfully!`);
+      return response.data;
+    } catch (error) {
+      toast.error(`Failed to update contact "${updatedData.name}"`);
       return rejectWithValue(error.message);
     }
   }

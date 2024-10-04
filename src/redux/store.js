@@ -10,33 +10,31 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import contactsReducer from "./contacts/slice"; // Редюсер для контактов
-import filtersReducer from "./filters/slice"; // Редюсер для фильтров
-import authReducer from "./auth/slice"; // Редюсер для аутентификации
+import contactsReducer from "./contacts/slice";
+import filtersReducer from "./filters/slice";
+import authReducer from "./auth/slice";
 
 const persistedAuthReducer = persistReducer(
   {
     key: "jwt-token",
     storage,
-    whitelist: ["token"], // Данные, которые будут храниться в хранилище
+    whitelist: ["token"],
   },
   authReducer
 );
 
-// Настройка Redux Store
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
-    contacts: contactsReducer, // Редюсер для контактов
-    filters: filtersReducer, // Добавьте редюсер для фильтров
+    contacts: contactsReducer,
+    filters: filtersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER], // Игнорируем действия, связанные с сериализацией
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
 });
 
-// Создание persistor для Redux Persist
 export const persistor = persistStore(store);

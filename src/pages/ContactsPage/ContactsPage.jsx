@@ -13,7 +13,7 @@ export default function ContactsPage() {
   const error = useSelector(selectError);
 
   useEffect(() => {
-    dispatch(fetchContacts()); // Запуск загрузки контактов при монтировании компонента
+    dispatch(fetchContacts());
   }, [dispatch]);
 
   return (

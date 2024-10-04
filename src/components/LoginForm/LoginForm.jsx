@@ -31,7 +31,7 @@ export default function LoginForm() {
           <Field type="password" name="password" />
         </label>
         <button type="submit" disabled={isLoading}>
-          Log In
+          {isLoading ? <div className={css.spinner}></div> : "Log In"}
         </button>
       </Form>
     </Formik>

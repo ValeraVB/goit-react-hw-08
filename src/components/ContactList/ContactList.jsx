@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
 import Contact from "../Contact/Contact";
-import { selectFilteredContacts } from "../../redux/contacts/selectors"; // Импортируйте селектор
+import { selectFilteredContacts } from "../../redux/contacts/selectors";
 import "./ContactList.css";
 
 const ContactList = () => {
-  const filteredContacts = useSelector(selectFilteredContacts); // Не передавайте filter, так как селектор уже учитывает его
-
+  const filteredContacts = useSelector(selectFilteredContacts);
   return (
     <ul className="contact-list">
       {filteredContacts.length > 0 ? (

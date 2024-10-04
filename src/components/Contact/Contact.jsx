@@ -5,7 +5,6 @@ import { Person, Phone, Delete, Edit } from "@mui/icons-material";
 import Modal from "react-modal";
 import "./Contact.css";
 
-// Устанавливаем root элемент для модального окна
 Modal.setAppElement("#root");
 
 const Contact = ({ name, number, id }) => {
@@ -17,14 +16,14 @@ const Contact = ({ name, number, id }) => {
 
   const handleDelete = () => {
     dispatch(deleteContact(id));
-    setIsModalOpen(false); // Закрыть модальное окно после удаления
+    setIsModalOpen(false);
   };
 
   const handleEdit = () => {
     dispatch(
       updateContact({ id, updatedData: { name: newName, number: newNumber } })
     );
-    setIsEditModalOpen(false); // Закрыть модальное окно после редактирования
+    setIsEditModalOpen(false);
   };
 
   return (
@@ -83,14 +82,14 @@ const Contact = ({ name, number, id }) => {
       >
         <h2>Edit Contact</h2>
         <form onSubmit={handleEdit}>
-          <label className="label">Name:</label>
+          <label className="edit-label">Name:</label>
 
           <input
             type="text"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
           />
-          <label className="label">Phone Number:</label>
+          <label className="edit-label">Phone Number:</label>
           <input
             type="text"
             value={newNumber}

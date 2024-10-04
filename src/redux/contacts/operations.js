@@ -1,8 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { toast } from "react-hot-toast"; // Импортируем toast
+import { toast } from "react-hot-toast";
 
-// Операция получения всех контактов
 export const fetchContacts = createAsyncThunk(
   "contacts/fetchAll",
   async (_, { rejectWithValue }) => {
@@ -15,27 +14,24 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
-// Операция добавления контакта
 export const addContact = createAsyncThunk(
   "contacts/addContact",
   async (newContact, { rejectWithValue }) => {
     try {
       const response = await axios.post("/contacts", newContact);
-      toast.success(`Contact "${newContact.name}" added successfully!`); // Уведомление с именем контакта
+      toast.success(`Contact "${newContact.name}" added successfully!`);
       return response.data;
     } catch (error) {
-      toast.error(`Failed to add contact "${newContact.name}"`); // Уведомление об ошибке с именем контакта
+      toast.error(`Failed to add contact "${newContact.name}"`);
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Операция удаления контакта
 export const deleteContact = createAsyncThunk(
   "contacts/deleteContact",
   async (contactId, { rejectWithValue, getState }) => {
     try {
-      // Найдем контакт по id из состояния перед удалением
       const { contacts } = getState();
       const contactToDelete = contacts.items.find(
         (contact) => contact.id === contactId
@@ -48,21 +44,19 @@ export const deleteContact = createAsyncThunk(
       await axios.delete(`/contacts/${contactId}`);
       toast.success(
         `Contact "${contactToDelete.name}" has been deleted successfully!`
-      ); // Уведомление с именем контакта
+      );
       return contactId;
     } catch (error) {
-      // Обработка случая, когда `contactToDelete` не был найден
       const contactName =
         getState().contacts.items.find((contact) => contact.id === contactId)
-          ?.name || ""; // Если не найдено, присвоим пустую строку
+          ?.name || "";
 
-      toast.error(`Failed to delete contact "${contactName}"`); // Уведомление об ошибке
+      toast.error(`Failed to delete contact "${contactName}"`);
       return rejectWithValue(error.message);
     }
   }
 );
 
-// Операция обновления контакта
 export const updateContact = createAsyncThunk(
   "contacts/updateContact",
   async ({ id, updatedData }, { rejectWithValue }) => {

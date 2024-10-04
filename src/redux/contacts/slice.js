@@ -19,7 +19,7 @@ const contactsSlice = createSlice({
     builder
       .addCase(fetchContacts.pending, (state) => {
         state.isLoading = true;
-        state.error = null; // Обнуляем ошибку при новом запросе
+        state.error = null;
       })
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -27,7 +27,7 @@ const contactsSlice = createSlice({
       })
       .addCase(fetchContacts.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload; // Сохраняем ошибку
+        state.error = action.payload;
       })
       .addCase(addContact.fulfilled, (state, action) => {
         state.items.push(action.payload);

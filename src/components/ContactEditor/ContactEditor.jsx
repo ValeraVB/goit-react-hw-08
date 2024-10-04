@@ -1,20 +1,19 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contacts/operations"; // Импортируйте вашу функцию для добавления контакта
+import { addContact } from "../../redux/contacts/operations";
 
 const ContactEditor = () => {
   const dispatch = useDispatch();
-  const [name, setName] = useState(""); // Состояние для имени контакта
-  const [number, setNumber] = useState(""); // Состояние для номера контакта
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Проверяем, чтобы поля не были пустыми
     if (name && number) {
-      dispatch(addContact({ name, number })); // Отправляем новый контакт
-      setName(""); // Очищаем поле имени
-      setNumber(""); // Очищаем поле номера
+      dispatch(addContact({ name, number }));
+      setName("");
+      setNumber("");
     }
   };
 

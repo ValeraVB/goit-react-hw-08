@@ -1,15 +1,13 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
-// Устанавливаем базовый URL
 axios.defaults.baseURL = "https://connections-api.goit.global/";
 
-// Устанавливаем заголовок авторизации
 const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
-// Очищаем заголовок авторизации
 const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = "";
 };
@@ -17,8 +15,6 @@ const clearAuthHeader = () => {
 /*
  * POST @ /users/signup
  * body: { name, email, password }
- *
- * После успешной регистрации добавляем токен в заголовок
  */
 export const register = createAsyncThunk(
   "auth/register",
@@ -28,6 +24,11 @@ export const register = createAsyncThunk(
       setAuthHeader(data.token);
       return data;
     } catch (error) {
+      // Обработка ошибки 409: Пользователь уже зарегистрирован
+      if (error.response && error.response.status === 400) {
+        toast.error("User already registered. Please log in.");
+        return thunkApi.rejectWithValue("User already registered");
+      }
       return thunkApi.rejectWithValue(error.message);
     }
   }
@@ -36,8 +37,6 @@ export const register = createAsyncThunk(
 /*
  * POST @ /users/login
  * body: { email, password }
- *
- * После успешного входа добавляем токен в заголовок
  */
 export const logIn = createAsyncThunk(
   "auth/login",
@@ -47,6 +46,10 @@ export const logIn = createAsyncThunk(
       setAuthHeader(response.data.token);
       return response.data;
     } catch (error) {
+      if (error.response && error.response.status === 400) {
+        toast.error("Invalid email or password. Please try again.");
+        return thunkAPI.rejectWithValue("Invalid email or password");
+      }
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -55,8 +58,6 @@ export const logIn = createAsyncThunk(
 /*
  * POST @ /users/logout
  * Заголовок: Authorization: Bearer token
- *
- * После успешного выхода очищаем токен из заголовка
  */
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkApi) => {
   try {
@@ -94,7 +95,6 @@ export const refreshUser = createAsyncThunk(
 /*
  * GET @ /contacts
  * Заголовок: Authorization: Bearer token
- * Получение всех контактов
  */
 export const fetchContacts = createAsyncThunk(
   "contacts/fetchAll",
@@ -112,7 +112,6 @@ export const fetchContacts = createAsyncThunk(
  * POST @ /contacts
  * Заголовок: Authorization: Bearer token
  * body: { name, number }
- * Создание нового контакта
  */
 export const addContact = createAsyncThunk(
   "contacts/addContact",
@@ -129,7 +128,6 @@ export const addContact = createAsyncThunk(
 /*
  * DELETE @ /contacts/{contactId}
  * Заголовок: Authorization: Bearer token
- * Удаление контакта по ID
  */
 export const deleteContact = createAsyncThunk(
   "contacts/deleteContact",
@@ -147,7 +145,6 @@ export const deleteContact = createAsyncThunk(
  * PATCH @ /contacts/{contactId}
  * Заголовок: Authorization: Bearer token
  * body: { name, number }
- * Обновление контакта по ID
  */
 export const updateContact = createAsyncThunk(
   "contacts/updateContact",

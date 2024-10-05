@@ -9,7 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 
 const HomePage = lazy(() => import("../pages/HomePage/HomePage"));
 const RegisterPage = lazy(() =>
-  import("../pages/RegisterPage/RegistrationPage")
+  import("../pages/RegistrationPage/RegistrationPage")
 );
 const LoginPage = lazy(() => import("../pages/LoginPage/LoginPage"));
 const TasksPage = lazy(() => import("../pages/ContactsPage/ContactsPage"));

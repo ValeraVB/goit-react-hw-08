@@ -1,4 +1,3 @@
-// slice.js или reducer.js
 import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchContacts,
@@ -6,6 +5,7 @@ import {
   deleteContact,
   updateContact,
 } from "./operations";
+import { logOut } from "../auth/operations";
 
 const contactsSlice = createSlice({
   name: "contacts",
@@ -44,6 +44,12 @@ const contactsSlice = createSlice({
         if (index !== -1) {
           state.items[index] = action.payload;
         }
+      })
+      // Очищення контактів після успішного виходу з системи
+      .addCase(logOut.fulfilled, (state) => {
+        state.items = [];
+        state.isLoading = false;
+        state.error = null;
       });
   },
 });
